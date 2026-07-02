@@ -30,6 +30,51 @@ const services = [
         name: "Line Up & Styling",
         description: "Sharp edges and modern styling.",
         price: "KSh 350"
+    },
+    {
+        name: "Sauna",
+        description: "Relaxing sauna session followed by a soothing massage.",
+        price: "KSh 3000"
+    },
+    {
+        name: "Manicure",
+        description: "Professional nail care and grooming.",
+        price: "KSh 2200"
+    },
+    {
+        name: "Pedicure",
+        description: "Professional foot care and grooming.",
+        price: "KSh 2500"
+    },
+    {
+        name: "Back Massage",
+        description: "Relaxing back massage to relieve tension and stress.",
+        price: "KSh 3000"
+    },
+    {
+        name: "Full Body Massage",
+        description: "A complete massage experience for relaxation and rejuvenation.",
+        price: "KSh 10,000"
+    },
+    {
+        name: "Facial Treatment",
+        description: "Professional facial treatment for healthy and glowing skin.",
+        price: "KSh 5000"
+    },
+    {
+        name: "Hair Coloring and Dyeing",
+        description: "Professional hair coloring and dyeing services for a vibrant look.",
+        price: "KSh 3000"
+    },
+    {
+        name: "Bald Cut",
+        description: "Professional bald grooming and maintenance.",
+        price: "KSh 2000"
+    },
+    {
+        name: "Taper Cut",
+        description: "A stylish haircut with a gradual fade from short to long.",
+        price: "KSh 1200"
     }
 ];
 //Finding the container element in HTML where the service cards will be appended
@@ -90,7 +135,7 @@ button.addEventListener("click",function(){
     //Adding an event listener to the remove button so that when it is clicked, the function inside it will be executed
     removeButton.addEventListener("click",function(){
         listItem.remove();
-        
+
     });
     //Appending li element (adding it to the end of the ul element) to the ul element, it creates <ul><li>newService</li></ul> in the HTML
     //we use list instead of listItem because we want to append the li element to the ul element
@@ -98,3 +143,46 @@ button.addEventListener("click",function(){
     //Empting the textbox after the user has added a service, so that the user can add another service without having to delete the previous one
     input.value = "";
 });
+
+//Feature 3:Form Handling with validation Feedback using event.preventDefault()
+// For us we are going to use Book Appointment form 
+//where the user will enter their name, email, phone number and select a service from the dropdown list and then click the submit button to book an appointment
+const bookingForm = document.getElementById("booking-form");
+
+//Getting the input fields from the form
+const customerName = document.getElementById("customer-name");
+const customerEmail = document.getElementById("customer-email");
+const customerService = document.getElementById("customer-service");
+//Display message getting from HTML to show the user if the form was submitted successfully or not
+const formMessage = document.getElementById("form-message");
+
+//Adding an Event Listener to the form so that when it is submitted, the function inside it will be executed
+bookingForm.addEventListener("submit", function(event){
+    //To prevent the form from submitting and refreshing the page 
+    event.preventDefault();
+    //Getting the values of the input fields
+    const name = customerName.value;
+    const email = customerEmail.value;
+    const service = customerService.value;
+
+    //Validating the form fields to make sure they are not empty
+    // || in JavaScript is the logical OR operator, it returns true if either of the operands is true, and false if both are false
+    if(name ===""|| email ==="" || service ===""){
+        formMessage.textContent = "Please fill in all the fields.";
+        formMessage.style.color = "red";
+    }else{
+        //If the form is valid, we can submit the form and show a success message
+        formMessage.textContent = "Thank you for booking your service with us!";
+        formMessage.style.color = "green";
+        //Here we can also clear the form fields after successful submission
+        customerName.value = "";
+        customerEmail.value = "";
+        customerService.value = "";
+        //  Here we can also send the form data to the server using AJAX or Fetch API, but for now we will just show a success message
+        //We can also clear the form message after a few seconds using setTimeout() function
+        //setTimeout(function(){
+           // formMessage.textContent = "";
+        //}, 3000); we can also use this to clear the form message after 3 seconds
+    }
+});
+
