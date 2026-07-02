@@ -224,5 +224,17 @@ bookingForm.addEventListener("submit", function(event){
     }
 });
 
+//Feature 5: Clickable Banner with Caption revealing more information about the barbershop
+//Finding the banner element in HTML document
+const banner = document.getElementById("banner");
+//Finding the banner caption element in HTML document
+const bannerCaption = document.getElementById("banner-caption");
 
+//Adding an event listener to the banner so that when it is clicked, the function inside it will be executed
+banner.addEventListener("click", function(){
+    console.log("Banner clicked");
+    //Toggle means:
+    //If class exists, REMOVE IT, if class does not exist, ADD IT
+    bannerCaption.classList.toggle("show");
+})
 

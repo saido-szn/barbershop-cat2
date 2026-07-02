@@ -69,6 +69,33 @@ nav a:hover{
     object-fit:cover;
     filter:brightness(35%);
 }
+/* Banner caption (hidden by default) */
+.banner-caption{
+    position:absolute;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.8);
+    color:white;
+    padding:15px 25px;
+    border:1px solid var(--gold);
+    border-radius:5px;
+    max-width:600px;
+    text-align:center;
+
+    /* Hidden by default */
+    display:none;
+}
+
+/* Show caption when JavaScript adds this class */
+.banner-caption.show{
+    display:block;
+}
+
+/* Make the banner look clickable */
+.hero-image{
+    cursor:pointer;
+}
 /* Hero content styles */
 .hero-content{
     position:absolute;
@@ -380,4 +407,34 @@ footer{
     margin-top:20px;
     font-weight:bold;
     color:var(--gold);
+}
+
+.banner-caption{
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:80%;
+    max-width:600px;
+
+    background:rgba(13,13,13,0.9);
+    color:var(--white);
+
+    padding:18px;
+    border-left:5px solid var(--gold);
+    border-radius:8px;
+
+    text-align:center;
+    font-size:1rem;
+    line-height:1.6;
+
+    opacity:0;
+    visibility:hidden;
+    transition:0.4s;
+}
+
+.banner-caption.show{
+    opacity:1;
+    visibility:visible;
 }
