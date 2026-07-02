@@ -106,43 +106,81 @@ services.forEach(function(service){
     servicesContainer.appendChild(card);
 });
 
+
 //Feature 2: Dynamically adding and removing Elements by the user through an input button of 
+//Feature 4: Persistent Data Storage using Local Storage
 //using createElement() and appendChild()), and each item gets its own button to remove it (using remove()).
 //Finding the input element in HTML where the user will type the service name
 const input= document.getElementById("service-input");
 const button = document.getElementById("add-button");
 const list= document.getElementById("service-list");
+//Creating an empty array to store the services added by the user
+let wishlist = [];
+
+//Loading storage
+const savedWishlist = localStorage.getItem("wishlist");
+    //Storing the updated wishlist array in the local storage in form of a string using JSON.stringify() method, so that it can be retrieved later even after the page is refreshed or closed
+if(savedWishlist){
+        //Parsing the saved wishlist from local storage back into an array using JSON.parse() method
+        wishlist = JSON.parse(savedWishlist);
+        //Display the saved wishlist
+        wishlist.forEach(function(service) {
+        // We will use a function to create each list item
+        createService(service);
+    });
+}
 //Adding an event listener to the button so that when it is clicked, the function inside it will be executed
 //we have many events including click dblclick, mouseover, keydown ,keyup ,submit etc
-button.addEventListener("click",function(){
-    //Getting the value of the input element
+button.addEventListener("click", function(){
+    // Getting the value of the input element
     const newService = input.value;
-    //Preventing the user from adding an empty service to the list
+    // Preventing the user from adding an empty service
     if(newService === ""){
         alert("Kindly Enter a Service");
         return;
     }
-    console.log(newService);
-    //Creating a new li element for the new services, it creates <li></li> in the HTML
-    const listItem = document.createElement("li");
-    //Entering the value of the input element into the li element, it creates <li>newService</li> in the HTML
-    listItem.textContent = newService;
-    //Creating a new button element for the remove button, it creates <button></button> in the HTML
-    const removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    //Here we are putting the remove button inside the li element, not like list.appendChild(listItem); we put it inside the ul element, it creates <li>newService<button>Remove</button></li> in the HTML
-    listItem.appendChild(removeButton);
-    //Adding an event listener to the remove button so that when it is clicked, the function inside it will be executed
-    removeButton.addEventListener("click",function(){
-        listItem.remove();
-
-    });
-    //Appending li element (adding it to the end of the ul element) to the ul element, it creates <ul><li>newService</li></ul> in the HTML
-    //we use list instead of listItem because we want to append the li element to the ul element
-    list.appendChild(listItem);
-    //Empting the textbox after the user has added a service, so that the user can add another service without having to delete the previous one
+    // Add the service to the array
+    wishlist.push(newService);
+    // Save the array in localStorage
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    // Display the new service
+    createService(newService);
+    // Empty the textbox
     input.value = "";
 });
+    //Function that creates ONE service item
+    //We create a function to avoid code repetition, since we are creating the same elements for each service in the wishlist
+   function createService(service){
+    //Creating a new list item element for the service
+    const listItem = document.createElement("li");
+    //Setting the text content of the list item to the service name
+    listItem.textContent = service;
+
+    //Creating a remove button for the service item
+    const removeButton = document.createElement("button");
+    //Setting the text content of the remove button to "Remove"
+    removeButton.textContent = "Remove";
+
+    //Adding a class to the remove button for styling purposes
+    removeButton.classList.add("remove-button");
+    //Adding an event listener to the remove button so that when it is clicked, the function inside it will be executed
+    removeButton.addEventListener("click", function(){
+        //Removing the list item from the list when the remove button is clicked
+        listItem.remove();
+        //Removing the service from the wishlist array when the remove button is clicked
+        wishlist = wishlist.filter(function(item){
+            //Filtering the wishlist array to remove the service that was clicked
+            return item !== service;
+        });
+        //Updating the local storage with the new wishlist array after removing the service
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    });
+    //Appending the remove button to the list item
+    listItem.appendChild(removeButton);
+    //Appending the list item to the list
+    list.appendChild(listItem);
+}
+
 
 //Feature 3:Form Handling with validation Feedback using event.preventDefault()
 // For us we are going to use Book Appointment form 
@@ -185,4 +223,6 @@ bookingForm.addEventListener("submit", function(event){
         //}, 3000); we can also use this to clear the form message after 3 seconds
     }
 });
+
+
 
