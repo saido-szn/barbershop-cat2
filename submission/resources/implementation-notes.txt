@@ -1,0 +1,62 @@
+Hairitage BarberShop Implementation Notes
+1. Loop-rendered dynamic content
+
+In this feature I stored all barbershop services
+inside a JavaScript array of objects.
+
+I used forEach() to go through each service
+and display it on the webpage.
+
+The services are created by JavaScript instead
+of being written directly in the HTML.
+
+2. Dynamically add & remove elements
+
+In this feature I allowed users to add new
+services to their appointment wishlist.
+
+I used createElement() and appendChild()
+to create new list items.
+
+Each service also gets its own Remove button.
+
+When the Remove button is clicked,
+remove() deletes that service from the list.
+
+
+3. Form handling with validation feedback
+
+In this feature I used an input box and
+button to receive user input.
+
+I checked whether the input was empty.
+
+If the input was empty,
+an alert message was displayed.
+
+If the input was valid,
+the service was added to the wishlist.
+
+
+4. Persistent state with localStorage
+
+In this feature I saved the user's wishlist
+using localStorage.
+
+I used JSON.stringify() to save the array.
+
+I used JSON.parse() to load the saved data.
+
+The wishlist remains available even after
+the webpage is refreshed or reopened.
+
+
+5. Click-to-reveal on your banner
+
+In this feature I made the banner clickable.
+
+When the banner is clicked,
+extra information is shown or hidden.
+
+I used classList.toggle() to switch
+between showing and hiding the caption.
